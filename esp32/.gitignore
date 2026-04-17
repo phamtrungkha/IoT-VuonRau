@@ -1,0 +1,9 @@
+.pio/
+
+# Common editor/OS noise
+.vscode/
+.idea/
+*.swp
+*.tmp
+.DS_Store
+

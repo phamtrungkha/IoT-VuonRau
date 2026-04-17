@@ -1,0 +1,2 @@
+Lệnh hạ độ sáng màn hình 
+    sudo tee /sys/class/backlight/intel_backlight/brightness <<< 20

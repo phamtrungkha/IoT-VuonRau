@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:vuonrau;MODE=MySQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+app:
+  mqtt:
+    host: 127.0.0.1
+    port: 1883
+    client-id: vuonrau-backend-test
+  device:
+    stale-after-seconds: 300
+    allowed-ids:
+      - water_controller

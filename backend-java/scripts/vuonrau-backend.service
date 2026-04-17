@@ -1,0 +1,15 @@
+[Unit]
+Description=VuonRau Backend (Spring Boot + MQTT + MySQL)
+After=network-online.target mysql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=khapt
+WorkingDirectory=/opt/vuonrau
+ExecStart=/usr/bin/java -jar /opt/vuonrau/lib/vuonrau-backend.jar --spring.config.additional-location=file:/opt/vuonrau/config/
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

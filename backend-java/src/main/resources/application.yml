@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: vuonrau-backend
+  datasource:
+    #url: jdbc:mysql://127.0.0.1:3306/vuonrau?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql://192.168.1.92:3306/vuonrau?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: vuonrau
+    password: vuonrau
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
+
+server:
+  port: 8000
+
+app:
+  mqtt:
+    #host: 127.0.0.1
+    host: 192.168.1.92
+    port: 1883
+    client-id: vuonrau-backend
+    username:
+    password:
+  device:
+    stale-after-seconds: 300
+    allowed-ids:
+      - water_controller

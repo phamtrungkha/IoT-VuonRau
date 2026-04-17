@@ -1,0 +1,93 @@
+{
+  "@@locale": "vi",
+  "appTitle": "Vườn rau",
+  "dashboardTitle": "Vườn rau",
+  "settingsTitle": "Cài đặt",
+  "settingsTooltip": "Cài đặt",
+  "fullscreenCameraTooltip": "Toàn màn hình camera",
+  "refreshTooltip": "Làm mới",
+
+  "waterValveSectionTitle": "Điều khiển van nước",
+  "humidityRawLabel": "Độ ẩm (raw): {value}",
+  "@humidityRawLabel": {
+    "placeholders": { "value": {} }
+  },
+  "lastUpdatedLabel": "Cập nhật gần nhất: {value}",
+  "@lastUpdatedLabel": {
+    "placeholders": { "value": {} }
+  },
+  "waterValveSwitchLabel": "Van nước",
+  "pressRefreshHint": "Nhấn làm mới để tải trạng thái.",
+  "valveStateLabel": "Van: {value}",
+  "@valveStateLabel": { "placeholders": { "value": {} } },
+  "uptimeTimestampLabel": "Dấu thời gian uptime: {value}",
+  "@uptimeTimestampLabel": { "placeholders": { "value": {} } },
+  "lastUpdatedBackendLabel": "Cập nhật (backend): {value}",
+  "@lastUpdatedBackendLabel": { "placeholders": { "value": {} } },
+  "valveOn": "BẬT",
+  "valveOff": "TẮT",
+  "unknownState": "Không rõ",
+  "missingLabel": "(thiếu)",
+
+  "statusCannotReachBackendTitle": "Không thể kết nối Backend",
+  "statusCannotReachBackendSubtitle": "Base URL: {baseUrl}\n{error}",
+  "@statusCannotReachBackendSubtitle": {
+    "placeholders": { "baseUrl": {}, "error": {} }
+  },
+  "statusBackendCannotReachMqttTitle": "Backend không kết nối được MQTT",
+  "statusBackendCannotReachMqttSubtitle": "Base URL: {baseUrl}\nKiểm tra broker / mạng. Lệnh điều khiển có thể thất bại (503).",
+  "@statusBackendCannotReachMqttSubtitle": {
+    "placeholders": { "baseUrl": {} }
+  },
+  "statusDeviceNotReportingTitle": "Thiết bị không gửi trạng thái",
+  "statusDeviceNotReportingSubtitle": "Base URL: {baseUrl}\nTuổi trạng thái: {ageLabel}. Kiểm tra ESP32 nguồn/Wi‑Fi/topic MQTT.",
+  "@statusDeviceNotReportingSubtitle": {
+    "placeholders": { "baseUrl": {}, "ageLabel": {} }
+  },
+  "statusAllSystemsOkTitle": "Hệ thống ổn định",
+  "statusAllSystemsOkSubtitle": "Base URL: {baseUrl}\nBackend OK. MQTT OK. Trạng thái thiết bị mới.",
+  "@statusAllSystemsOkSubtitle": {
+    "placeholders": { "baseUrl": {} }
+  },
+  "retryButton": "Thử lại",
+
+  "backendBaseUrlLabel": "Backend base URL",
+  "backendBaseUrlHint": "http://192.168.1.10:8000",
+
+  "technicalInfoTitle": "Thông tin kỹ thuật",
+  "deviceLabel": "Thiết bị: {deviceId}",
+  "@deviceLabel": { "placeholders": { "deviceId": {} } },
+  "backendToMqttLabel": "Backend→MQTT: {value}",
+  "@backendToMqttLabel": { "placeholders": { "value": {} } },
+  "connectedLabel": "Kết nối",
+  "disconnectedLabel": "Mất kết nối",
+  "unknownLabel": "-",
+  "stateAgeLabel": "Tuổi trạng thái: {value}",
+  "@stateAgeLabel": { "placeholders": { "value": {} } },
+  "staleLabel": "Stale: {value}",
+  "@staleLabel": { "placeholders": { "value": {} } },
+  "yesLabel": "Có",
+  "noLabel": "Không",
+
+  "expandTitle": "Mở rộng",
+  "automationSoon": "Tự động tưới (sắp có)",
+  "notificationsSoon": "Thông báo (sắp có)",
+  "ezvizCameraTitle": "Camera EZVIZ",
+  "ptzStartFailed": "Không điều khiển được PTZ: {message}",
+  "@ptzStartFailed": { "placeholders": { "message": {} } },
+  "ptzError": "PTZ lỗi: {message}",
+  "@ptzError": { "placeholders": { "message": {} } },
+  "startCamera": "Bật camera",
+  "cameraPausedLabel": "Tạm dừng",
+  "ezvizNotSupportedWeb": "EZVIZ không hỗ trợ trên Web",
+  "ezvizOnlyAndroidIos": "EZVIZ chỉ hỗ trợ Android/iOS",
+  "stopTooltip": "Dừng",
+  "missingAccessTokenBanner": "Thiếu EZVIZ_ACCESS_TOKEN. Chạy với --dart-define=EZVIZ_ACCESS_TOKEN=...",
+  "cameraSourceLabel": "Nguồn: {value}",
+  "@cameraSourceLabel": { "placeholders": { "value": {} } },
+  "cameraApiAuthLabel": "API: {apiUrl}   AUTH: {authUrl}",
+  "@cameraApiAuthLabel": { "placeholders": { "apiUrl": {}, "authUrl": {} } },
+  "cameraAppKeyTokenLabel": "AppKey: {appKeyPrefix}…   Token: {tokenPrefix}",
+  "@cameraAppKeyTokenLabel": { "placeholders": { "appKeyPrefix": {}, "tokenPrefix": {} } }
+}
+

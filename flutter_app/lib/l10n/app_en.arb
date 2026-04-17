@@ -1,0 +1,93 @@
+{
+  "@@locale": "en",
+  "appTitle": "VuonRau",
+  "dashboardTitle": "Garden dashboard",
+  "settingsTitle": "Settings",
+  "settingsTooltip": "Settings",
+  "fullscreenCameraTooltip": "Fullscreen camera",
+  "refreshTooltip": "Refresh",
+
+  "waterValveSectionTitle": "Water valve control",
+  "humidityRawLabel": "Humidity (raw): {value}",
+  "@humidityRawLabel": {
+    "placeholders": { "value": {} }
+  },
+  "lastUpdatedLabel": "Last updated: {value}",
+  "@lastUpdatedLabel": {
+    "placeholders": { "value": {} }
+  },
+  "waterValveSwitchLabel": "Water valve",
+  "pressRefreshHint": "Press refresh to load state.",
+  "valveStateLabel": "Valve: {value}",
+  "@valveStateLabel": { "placeholders": { "value": {} } },
+  "uptimeTimestampLabel": "Uptime timestamp: {value}",
+  "@uptimeTimestampLabel": { "placeholders": { "value": {} } },
+  "lastUpdatedBackendLabel": "Last updated (backend): {value}",
+  "@lastUpdatedBackendLabel": { "placeholders": { "value": {} } },
+  "valveOn": "ON",
+  "valveOff": "OFF",
+  "unknownState": "Unknown",
+  "missingLabel": "(missing)",
+
+  "statusCannotReachBackendTitle": "Cannot reach Backend",
+  "statusCannotReachBackendSubtitle": "Base URL: {baseUrl}\n{error}",
+  "@statusCannotReachBackendSubtitle": {
+    "placeholders": { "baseUrl": {}, "error": {} }
+  },
+  "statusBackendCannotReachMqttTitle": "Backend cannot reach MQTT broker",
+  "statusBackendCannotReachMqttSubtitle": "Base URL: {baseUrl}\nCheck broker / network. Device commands may fail (503).",
+  "@statusBackendCannotReachMqttSubtitle": {
+    "placeholders": { "baseUrl": {} }
+  },
+  "statusDeviceNotReportingTitle": "Device not reporting state",
+  "statusDeviceNotReportingSubtitle": "Base URL: {baseUrl}\nLast state age: {ageLabel}. Check ESP32 power/Wi‑Fi/MQTT topics.",
+  "@statusDeviceNotReportingSubtitle": {
+    "placeholders": { "baseUrl": {}, "ageLabel": {} }
+  },
+  "statusAllSystemsOkTitle": "All systems OK",
+  "statusAllSystemsOkSubtitle": "Base URL: {baseUrl}\nBackend reachable. MQTT connected. Device state is fresh.",
+  "@statusAllSystemsOkSubtitle": {
+    "placeholders": { "baseUrl": {} }
+  },
+  "retryButton": "Retry",
+
+  "backendBaseUrlLabel": "Backend base URL",
+  "backendBaseUrlHint": "http://192.168.1.10:8000",
+
+  "technicalInfoTitle": "Technical info",
+  "deviceLabel": "Device: {deviceId}",
+  "@deviceLabel": { "placeholders": { "deviceId": {} } },
+  "backendToMqttLabel": "Backend→MQTT: {value}",
+  "@backendToMqttLabel": { "placeholders": { "value": {} } },
+  "connectedLabel": "Connected",
+  "disconnectedLabel": "Disconnected",
+  "unknownLabel": "-",
+  "stateAgeLabel": "State age: {value}",
+  "@stateAgeLabel": { "placeholders": { "value": {} } },
+  "staleLabel": "Stale: {value}",
+  "@staleLabel": { "placeholders": { "value": {} } },
+  "yesLabel": "Yes",
+  "noLabel": "No",
+
+  "expandTitle": "More",
+  "automationSoon": "Automation (coming soon)",
+  "notificationsSoon": "Notifications (coming soon)",
+  "ezvizCameraTitle": "EZVIZ Camera",
+  "ptzStartFailed": "PTZ start failed: {message}",
+  "@ptzStartFailed": { "placeholders": { "message": {} } },
+  "ptzError": "PTZ error: {message}",
+  "@ptzError": { "placeholders": { "message": {} } },
+  "startCamera": "Start camera",
+  "cameraPausedLabel": "Paused",
+  "ezvizNotSupportedWeb": "EZVIZ view is not supported on Web",
+  "ezvizOnlyAndroidIos": "EZVIZ view is only supported on Android/iOS",
+  "stopTooltip": "Stop",
+  "missingAccessTokenBanner": "Missing EZVIZ_ACCESS_TOKEN. Run with --dart-define=EZVIZ_ACCESS_TOKEN=...",
+  "cameraSourceLabel": "Source: {value}",
+  "@cameraSourceLabel": { "placeholders": { "value": {} } },
+  "cameraApiAuthLabel": "API: {apiUrl}   AUTH: {authUrl}",
+  "@cameraApiAuthLabel": { "placeholders": { "apiUrl": {}, "authUrl": {} } },
+  "cameraAppKeyTokenLabel": "AppKey: {appKeyPrefix}…   Token: {tokenPrefix}",
+  "@cameraAppKeyTokenLabel": { "placeholders": { "appKeyPrefix": {}, "tokenPrefix": {} } }
+}
+
