@@ -7,6 +7,7 @@ Thư mục này **không** là phần runtime của backend hay app. Chỉ chứ
 | File | Mục đích |
 |------|----------|
 | [`db_inspect.py`](db_inspect.py) | Kết nối MySQL (qua `pymysql`), in danh sách bảng, cột và metadata từ `information_schema` — hữu ích khi so sánh schema với Flyway hoặc đếm dữ liệu thử. |
+| [`check_ipv6_reachability.sh`](check_ipv6_reachability.sh) | Chạy **trên server Linux**: IPv6 global, `ss`/firewall, `curl` tới `:8000` qua IPv6. Không thay thế thử từ mạng ngoài (5G / máy khác). |
 
 ### Chạy `db_inspect.py`
 

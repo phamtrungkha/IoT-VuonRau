@@ -17,7 +17,9 @@ int resultRaw = -1;
 unsigned long phaseStartMs = 0;
 
 const unsigned long SETTLE_MS = 150;
-const unsigned long WIFI_CONNECT_TIMEOUT_MS = 20000;
+const unsigned long WIFI_CONNECT_TIMEOUT_MS = 30000;
+/** Short delay after restoring STA mode so the RF stack is ready before WiFi.begin (reduces flaky reconnect). */
+const unsigned long WIFI_STA_SETTLE_MS = 80;
 
 } // namespace
 
@@ -47,7 +49,7 @@ bool soilAdcWifiSuspendJobPoll(int *outRaw) {
     return false;
 
   case Phase::WifiOff:
-    WiFi.disconnect(true);
+    // RF off only: avoid aggressive disconnect paths that can leave STA/NVS in odd states after many cycles.
     WiFi.mode(WIFI_OFF);
     phase = Phase::Settle;
     phaseStartMs = now;
@@ -63,6 +65,8 @@ bool soilAdcWifiSuspendJobPoll(int *outRaw) {
   case Phase::Sample:
     resultRaw = readAdcAvg(pendingPin, pendingSamples, pendingDelayUs);
     WiFi.mode(WIFI_STA);
+    delay(WIFI_STA_SETTLE_MS);
+    WiFi.persistent(false);
     WiFi.setHostname(MDNS_HOSTNAME);
     WiFi.setAutoReconnect(true);
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -74,6 +78,7 @@ bool soilAdcWifiSuspendJobPoll(int *outRaw) {
     if (WiFi.status() == WL_CONNECTED) {
       *outRaw = resultRaw;
       phase = Phase::Idle;
+      WifiManager::afterAdcSuspendCycle(true);
       WifiManager::setReconnectPaused(false);
       Serial.println(F("[adc] WiFi restored after soil sample"));
       return true;
@@ -81,6 +86,7 @@ bool soilAdcWifiSuspendJobPoll(int *outRaw) {
     if (now - phaseStartMs >= WIFI_CONNECT_TIMEOUT_MS) {
       *outRaw = -1;
       phase = Phase::Idle;
+      WifiManager::afterAdcSuspendCycle(false);
       WifiManager::setReconnectPaused(false);
       Serial.println(F("[adc] WiFi reconnect timeout after soil sample"));
       return true;

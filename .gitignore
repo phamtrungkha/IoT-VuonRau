@@ -10,6 +10,9 @@ Thumbs.db
 .env.*
 !.env.example
 
+# PlatformIO / clangd generated files (may contain local build flags)
+**/compile_commands.json
+
 # Python venv (local only; recreate with: python3 -m venv .venv)
 .venv/
 

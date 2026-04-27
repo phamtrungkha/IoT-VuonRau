@@ -10,11 +10,11 @@
 #endif
 
 #ifndef RELAY_PIN
-#define RELAY_PIN 15
+#define RELAY_PIN 5
 #endif
 
 #ifndef SENSOR_PIN
-#define SENSOR_PIN 14
+#define SENSOR_PIN 34
 #endif
 
 #ifndef WIFI_SSID

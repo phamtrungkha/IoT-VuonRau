@@ -74,13 +74,28 @@ class _EzvizCameraScreenState extends State<EzvizCameraScreen> {
       );
     } catch (e) {
       if (!mounted) return;
-      final msg = e.toString();
+      final msg = _formatPtzErrorMessage(e);
       final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l10n.ptzStartFailed(msg))),
       );
       rethrow;
     }
+  }
+
+  String _formatPtzErrorMessage(Object e) {
+    if (e is PlatformException) {
+      final details = e.details;
+      final isLimit = details == 160002 ||
+          details == 160003 ||
+          details == 160004 ||
+          details == 160005;
+      if (e.code == 'ptz_error' && isLimit) {
+        return 'Camera đã tới giới hạn quay/tilt, không thể quay thêm theo hướng này.';
+      }
+      return e.message ?? e.toString();
+    }
+    return e.toString();
   }
 
   Future<void> _ptzStop({EzvizPtzCommand? command}) async {

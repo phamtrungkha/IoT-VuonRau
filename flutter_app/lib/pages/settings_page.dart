@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:vuonrau/l10n/app_localizations.dart';
+import 'package:http/http.dart' as http;
 
 import '../api/backend_api.dart';
 import '../api/dtos.dart';
@@ -27,6 +30,11 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _stale = true;
   DeviceSettingsKvDto? _settings;
 
+  bool _publicIpLoading = false;
+  String? _publicIpError;
+  String? _latestPublicIp;
+  DateTime? _latestPublicIpAt;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _moistureThresholdRawController =
         TextEditingController(text: AppConfig.moistureThresholdRaw.value.toString());
     _refreshAll();
+    _refreshPublicIp();
   }
 
   @override
@@ -84,11 +93,78 @@ class _SettingsPageState extends State<SettingsPage> {
     return '${_lastStateAgeS!.toStringAsFixed(1)}s';
   }
 
-  void _applyBaseUrl(String value) {
+  Future<void> _applyBaseUrl(String value) async {
     final next = value.trim();
     if (next.isEmpty) return;
-    AppConfig.backendBaseUrl.value = next;
-    _refreshAll();
+    await AppConfig.setBackendBaseUrl(next);
+    await _refreshAll();
+  }
+
+  Future<void> _refreshPublicIp() async {
+    setState(() {
+      _publicIpLoading = true;
+      _publicIpError = null;
+    });
+
+    final uri = Uri.parse(
+      '${AppConfig.publicIpEndpoint}?key=${Uri.encodeQueryComponent(AppConfig.publicIpKey)}',
+    );
+
+    try {
+      final res = await http.get(uri).timeout(const Duration(seconds: 5));
+      if (res.statusCode != 200) {
+        throw Exception('HTTP ${res.statusCode}: ${res.body}');
+      }
+      final data = jsonDecode(res.body) as Map<String, dynamic>;
+      final ip = (data['ip'] as String?)?.trim();
+      final updatedAtMs = data['updatedAt'];
+
+      if (ip == null || ip.isEmpty) {
+        throw Exception('Empty IP from GAS');
+      }
+
+      DateTime? updatedAt;
+      if (updatedAtMs is num) {
+        updatedAt = DateTime.fromMillisecondsSinceEpoch(updatedAtMs.toInt());
+      }
+
+      setState(() {
+        _latestPublicIp = ip;
+        _latestPublicIpAt = updatedAt;
+      });
+    } catch (e) {
+      setState(() => _publicIpError = e.toString());
+    } finally {
+      setState(() => _publicIpLoading = false);
+    }
+  }
+
+  int _inferBackendPort() {
+    final raw = _baseUrlController.text.trim().isEmpty
+        ? AppConfig.backendBaseUrl.value
+        : _baseUrlController.text.trim();
+    final withScheme = raw.contains('://') ? raw : 'http://$raw';
+    final uri = Uri.tryParse(withScheme);
+    if (uri != null && uri.hasPort) return uri.port;
+    return AppConfig.defaultBackendPort;
+  }
+
+  String? _suggestedBaseUrl() {
+    final ip = _latestPublicIp;
+    if (ip == null || ip.isEmpty) return null;
+    final port = _inferBackendPort();
+    final host = ip.contains(':') ? '[$ip]' : ip;
+    return 'http://$host:$port';
+  }
+
+  String _publicIpLabel() {
+    if (_publicIpLoading) return 'Public IP: loading...';
+    if (_publicIpError != null) return 'Public IP: error';
+    if (_latestPublicIp == null) return 'Public IP: -';
+    final at = _latestPublicIpAt;
+    if (at == null) return 'Public IP: $_latestPublicIp';
+    final ageS = DateTime.now().difference(at).inSeconds;
+    return 'Public IP: $_latestPublicIp (${ageS}s ago)';
   }
 
   Future<void> _saveSettings() async {
@@ -161,10 +237,65 @@ class _SettingsPageState extends State<SettingsPage> {
                   labelText: l10n.backendBaseUrlLabel,
                   hintText: l10n.backendBaseUrlHint,
                   border: const OutlineInputBorder(),
+                  suffixIcon: AnimatedBuilder(
+                    animation: _baseUrlController,
+                    builder: (context, _) {
+                      if (_baseUrlController.text.isEmpty) {
+                        return const SizedBox.shrink();
+                      }
+                      return IconButton(
+                        tooltip: 'Clear',
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _baseUrlController.clear();
+                        },
+                      );
+                    },
+                  ),
                 ),
                 controller: _baseUrlController,
                 onSubmitted: _applyBaseUrl,
               ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        _publicIpLabel(),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: 'Refresh public IP',
+                    onPressed: _publicIpLoading ? null : _refreshPublicIp,
+                    icon: const Icon(Icons.sync),
+                  ),
+                  IconButton(
+                    tooltip: 'Apply to textbox',
+                    onPressed: (_suggestedBaseUrl() == null)
+                        ? null
+                        : () {
+                            final v = _suggestedBaseUrl();
+                            if (v == null) return;
+                            setState(() => _baseUrlController.text = v);
+                          },
+                    icon: const Icon(Icons.arrow_upward),
+                  ),
+                ],
+              ),
+              if (_publicIpError != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    _publicIpError!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                  ),
+                ),
               const SizedBox(height: 16),
               Card(
                 child: Padding(

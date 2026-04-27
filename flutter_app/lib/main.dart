@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:vuonrau/l10n/app_localizations.dart';
 
+import 'app/app_config.dart';
 import 'pages/dashboard_page.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AppConfig.init();
   runApp(const VuonRauApp());
 }
 

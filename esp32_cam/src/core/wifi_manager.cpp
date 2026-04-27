@@ -11,6 +11,7 @@ unsigned long lastWifiAttemptMs = 0;
 unsigned long wifiDisconnectedSinceMs = 0;
 unsigned long lastWifiHardResetMs = 0;
 bool reconnectPaused = false;
+int lastWifiStatusForEdge = -1;
 
 void ensureWifi() {
   if (reconnectPaused) {
@@ -57,12 +58,11 @@ void begin() {
 }
 
 void loop() {
-  static int lastWifiStatus = -1;
   int st = WiFi.status();
-  if (st == WL_CONNECTED && lastWifiStatus != WL_CONNECTED) {
+  if (st == WL_CONNECTED && lastWifiStatusForEdge != WL_CONNECTED) {
     WiFi.setSleep(false);
   }
-  lastWifiStatus = st;
+  lastWifiStatusForEdge = st;
 
   ensureWifi();
 }
@@ -70,5 +70,19 @@ void loop() {
 bool isConnected() { return WiFi.status() == WL_CONNECTED; }
 
 void setReconnectPaused(bool paused) { reconnectPaused = paused; }
+
+void afterAdcSuspendCycle(bool wifiConnected) {
+  int st = WiFi.status();
+  lastWifiStatusForEdge = st;
+  if (wifiConnected && st == WL_CONNECTED) {
+    wifiDisconnectedSinceMs = 0;
+    WiFi.setSleep(false);
+    lastWifiAttemptMs = millis();
+    return;
+  }
+  // Reconnect-from-job failed or timed out: allow ensureWifi() to run WiFi.begin() on the next loop without
+  // waiting the full WIFI_RETRY_INTERVAL_MS throttle.
+  lastWifiAttemptMs = millis() - WIFI_RETRY_INTERVAL_MS - 1;
+}
 
 } // namespace WifiManager

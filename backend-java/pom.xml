@@ -78,6 +78,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Prefer IPv6 when both A and AAAA exist (outbound DNS/connect). -->
+                    <jvmArguments>-Djava.net.preferIPv6Addresses=true</jvmArguments>
+                </configuration>
             </plugin>
         </plugins>
     </build>

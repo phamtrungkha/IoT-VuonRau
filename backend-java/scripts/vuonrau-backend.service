@@ -7,7 +7,7 @@ Wants=network-online.target
 Type=simple
 User=khapt
 WorkingDirectory=/opt/vuonrau
-ExecStart=/usr/bin/java -jar /opt/vuonrau/lib/vuonrau-backend.jar --spring.config.additional-location=file:/opt/vuonrau/config/
+ExecStart=/usr/bin/java -Djava.net.preferIPv6Addresses=true -jar /opt/vuonrau/lib/vuonrau-backend.jar --spring.config.additional-location=file:/opt/vuonrau/config/
 Restart=always
 RestartSec=3
 
