@@ -66,7 +66,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get historySelectOneType => 'Select humidity and/or valve.';
 
   @override
-  String get waterValveSectionTitle => 'Water valve control';
+  String get waterValveSectionTitle => 'Humidity parameters';
 
   @override
   String humidityRawLabel(Object value) {

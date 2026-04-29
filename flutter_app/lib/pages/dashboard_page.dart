@@ -418,10 +418,32 @@ class _DashboardPageState extends State<DashboardPage> {
                   const SizedBox(height: 8),
                   SwitchListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: Text(l10n.waterValveSwitchLabel),
+                    title: Text(
+                      l10n.waterValveSwitchLabel,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     value: _waterValve ?? false,
                     onChanged:
                         (_waterValve == null || _loading) ? null : _setWaterValve,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => const DeviceHistoryPage(),
+                        ),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.blue,
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: Text(
+                      l10n.historyDetailButton,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.blue,
+                      ),
+                    ),
                   ),
                   if (_waterValve == true && _remainingSeconds != null)
                     Padding(
@@ -433,19 +455,6 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                   if (_waterValve == null)
                     Text(l10n.pressRefreshHint),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (_) => const DeviceHistoryPage(),
-                          ),
-                        );
-                      },
-                      child: Text(l10n.historyDetailButton),
-                    ),
-                  ),
                 ],
               ),
             ),

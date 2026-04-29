@@ -215,7 +215,7 @@ abstract class AppLocalizations {
   /// No description provided for @waterValveSectionTitle.
   ///
   /// In en, this message translates to:
-  /// **'Water valve control'**
+  /// **'Humidity parameters'**
   String get waterValveSectionTitle;
 
   /// No description provided for @humidityRawLabel.

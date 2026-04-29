@@ -21,7 +21,7 @@
   "historyRangeMax3Days": "You can view at most 3 days per search.",
   "historySelectOneType": "Select humidity and/or valve.",
 
-  "waterValveSectionTitle": "Water valve control",
+  "waterValveSectionTitle": "Humidity parameters",
   "humidityRawLabel": "Humidity (raw): {value}",
   "@humidityRawLabel": {
     "placeholders": { "value": {} }

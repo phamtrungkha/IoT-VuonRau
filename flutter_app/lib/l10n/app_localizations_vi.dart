@@ -66,7 +66,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get historySelectOneType => 'Chọn độ ẩm và/hoặc van.';
 
   @override
-  String get waterValveSectionTitle => 'Điều khiển van nước';
+  String get waterValveSectionTitle => 'Thông số độ ẩm';
 
   @override
   String humidityRawLabel(Object value) {

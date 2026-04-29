@@ -21,7 +21,7 @@
   "historyRangeMax3Days": "Mỗi lần chỉ xem tối đa 3 ngày.",
   "historySelectOneType": "Chọn độ ẩm và/hoặc van.",
 
-  "waterValveSectionTitle": "Điều khiển van nước",
+  "waterValveSectionTitle": "Thông số độ ẩm",
   "humidityRawLabel": "Độ ẩm (raw): {value}",
   "@humidityRawLabel": {
     "placeholders": { "value": {} }
