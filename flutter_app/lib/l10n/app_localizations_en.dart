@@ -27,6 +27,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get refreshTooltip => 'Refresh';
 
   @override
+  String get deviceInfoTooltip => 'Device info';
+
+  @override
+  String get historyDetailButton => 'Details';
+
+  @override
+  String get historyTitle => 'Humidity & valve history';
+
+  @override
+  String get historyFromLabel => 'From';
+
+  @override
+  String get historyToLabel => 'To';
+
+  @override
+  String get historyIncludeHumidity => 'Humidity';
+
+  @override
+  String get historyIncludeValve => 'Valve';
+
+  @override
+  String get historySearchButton => 'Search';
+
+  @override
+  String get historyLoadMore => 'Load more';
+
+  @override
+  String get historyColumnTime => 'Date & time';
+
+  @override
+  String get historyColumnValue => 'Reading';
+
+  @override
+  String get historyRangeMax3Days => 'You can view at most 3 days per search.';
+
+  @override
+  String get historySelectOneType => 'Select humidity and/or valve.';
+
+  @override
   String get waterValveSectionTitle => 'Water valve control';
 
   @override
@@ -115,6 +154,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backendBaseUrlHint => 'http://192.168.1.10:8000';
 
   @override
+  String get ezvizAccessTokenLabel => 'EZVIZ access token';
+
+  @override
+  String get ezvizAccessTokenHint => 'Paste token from EZVIZ OpenAPI / console';
+
+  @override
+  String get ezvizAccessTokenHelper =>
+      'Leave empty to use the token from build (--dart-define), if configured.';
+
+  @override
   String get technicalInfoTitle => 'Technical info';
 
   @override
@@ -192,7 +241,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get missingAccessTokenBanner =>
-      'Missing EZVIZ_ACCESS_TOKEN. Run with --dart-define=EZVIZ_ACCESS_TOKEN=...';
+      'No EZVIZ token: open Settings and paste access token (or build with --dart-define=EZVIZ_ACCESS_TOKEN=...).';
 
   @override
   String cameraSourceLabel(Object value) {

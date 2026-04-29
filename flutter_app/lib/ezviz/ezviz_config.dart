@@ -5,7 +5,8 @@ class EzvizConfig {
     defaultValue: '37eca392a13640d180223f131bf05c17',
   );
 
-  static const accessToken = String.fromEnvironment(
+  /// Token từ `--dart-define=EZVIZ_ACCESS_TOKEN=...` (tuỳ chọn nếu đã lưu trong Cài đặt).
+  static const accessTokenFromEnvironment = String.fromEnvironment(
     'EZVIZ_ACCESS_TOKEN',
     defaultValue: '',
   );

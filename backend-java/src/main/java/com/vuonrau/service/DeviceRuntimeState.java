@@ -21,6 +21,18 @@ final class DeviceRuntimeState {
     Map<String, Object> outputs = new HashMap<>();
     Map<String, Instant> outputsUpdatedAt = new HashMap<>();
 
+    /** Effective valve for logging: explicit field wins, else boolean in outputs (e.g. ack path). */
+    Boolean effectiveWaterValve() {
+        if (waterValve != null) {
+            return waterValve;
+        }
+        Object o = outputs.get("water_valve");
+        if (o instanceof Boolean b) {
+            return b;
+        }
+        return null;
+    }
+
     DeviceRuntimeState merge(JsonNode payload, Instant now) {
         String msgType = text(payload, "type");
         if ("state".equals(msgType)) {
@@ -82,6 +94,9 @@ final class DeviceRuntimeState {
                     else out = v;
                     outputs.put(target, out);
                     outputsUpdatedAt.put(target, now);
+                    if ("water_valve".equals(target) && out instanceof Boolean b) {
+                        waterValve = b;
+                    }
                 }
             }
         }

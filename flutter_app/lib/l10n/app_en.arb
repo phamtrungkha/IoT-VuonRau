@@ -7,6 +7,20 @@
   "fullscreenCameraTooltip": "Fullscreen camera",
   "refreshTooltip": "Refresh",
 
+  "deviceInfoTooltip": "Device info",
+  "historyDetailButton": "Details",
+  "historyTitle": "Humidity & valve history",
+  "historyFromLabel": "From",
+  "historyToLabel": "To",
+  "historyIncludeHumidity": "Humidity",
+  "historyIncludeValve": "Valve",
+  "historySearchButton": "Search",
+  "historyLoadMore": "Load more",
+  "historyColumnTime": "Date & time",
+  "historyColumnValue": "Reading",
+  "historyRangeMax3Days": "You can view at most 3 days per search.",
+  "historySelectOneType": "Select humidity and/or valve.",
+
   "waterValveSectionTitle": "Water valve control",
   "humidityRawLabel": "Humidity (raw): {value}",
   "@humidityRawLabel": {
@@ -54,6 +68,10 @@
   "backendBaseUrlLabel": "Backend base URL",
   "backendBaseUrlHint": "http://192.168.1.10:8000",
 
+  "ezvizAccessTokenLabel": "EZVIZ access token",
+  "ezvizAccessTokenHint": "Paste token from EZVIZ OpenAPI / console",
+  "ezvizAccessTokenHelper": "Leave empty to use the token from build (--dart-define), if configured.",
+
   "technicalInfoTitle": "Technical info",
   "deviceLabel": "Device: {deviceId}",
   "@deviceLabel": { "placeholders": { "deviceId": {} } },
@@ -82,7 +100,7 @@
   "ezvizNotSupportedWeb": "EZVIZ view is not supported on Web",
   "ezvizOnlyAndroidIos": "EZVIZ view is only supported on Android/iOS",
   "stopTooltip": "Stop",
-  "missingAccessTokenBanner": "Missing EZVIZ_ACCESS_TOKEN. Run with --dart-define=EZVIZ_ACCESS_TOKEN=...",
+  "missingAccessTokenBanner": "No EZVIZ token: open Settings and paste access token (or build with --dart-define=EZVIZ_ACCESS_TOKEN=...).",
   "cameraSourceLabel": "Source: {value}",
   "@cameraSourceLabel": { "placeholders": { "value": {} } },
   "cameraApiAuthLabel": "API: {apiUrl}   AUTH: {authUrl}",

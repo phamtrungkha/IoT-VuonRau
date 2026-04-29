@@ -53,7 +53,9 @@ class DeviceRuntimeStateTest {
 
         assertEquals(t1, s.humidityUpdatedAt, "ACK must not update humidity timestamp");
         assertEquals(Boolean.TRUE, s.outputs.get("water_valve"));
+        assertEquals(Boolean.TRUE, s.waterValve);
         assertEquals(t2, s.outputsUpdatedAt.get("water_valve"));
+        assertEquals(Boolean.TRUE, s.effectiveWaterValve());
     }
 
     @Test

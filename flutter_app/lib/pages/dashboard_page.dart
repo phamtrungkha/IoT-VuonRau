@@ -12,6 +12,7 @@ import '../ezviz/ezviz_config.dart';
 import '../ezviz/ezviz_ptz.dart';
 import 'settings_page.dart';
 import 'device_details_page.dart';
+import 'device_history_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -227,7 +228,7 @@ class _DashboardPageState extends State<DashboardPage> {
         title: Text(l10n.dashboardTitle),
         actions: [
           IconButton(
-            tooltip: 'Details',
+            tooltip: l10n.deviceInfoTooltip,
             onPressed: () async {
               await Navigator.of(context).push(
                 MaterialPageRoute<void>(builder: (_) => const DeviceDetailsPage()),
@@ -285,13 +286,18 @@ class _DashboardPageState extends State<DashboardPage> {
                         maxScale: 4,
                         panEnabled: true,
                         scaleEnabled: true,
-                        child: EzvizCameraView(
-                          appKey: EzvizConfig.appKey,
-                          accessToken: EzvizConfig.accessToken,
-                          ezopenUrl: EzvizConfig.ezopenUrl,
-                          apiUrl: EzvizConfig.apiUrl,
-                          authUrl: EzvizConfig.authUrl,
-                          paused: _cameraPaused,
+                        child: ValueListenableBuilder<String>(
+                          valueListenable: AppConfig.ezvizAccessTokenOverride,
+                          builder: (context, _, __) {
+                            return EzvizCameraView(
+                              appKey: EzvizConfig.appKey,
+                              accessToken: AppConfig.ezvizAccessTokenEffective,
+                              ezopenUrl: EzvizConfig.ezopenUrl,
+                              apiUrl: EzvizConfig.apiUrl,
+                              authUrl: EzvizConfig.authUrl,
+                              paused: _cameraPaused,
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -398,7 +404,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     valueListenable: AppConfig.moistureThresholdRaw,
                     builder: (context, threshold, _) {
                       final h = _humidityRaw;
-                      final isDry = h != null && h < threshold;
+                      final isDry = h != null && h > threshold;
                       final style = isDry
                           ? TextStyle(color: Theme.of(context).colorScheme.error)
                           : null;
@@ -427,6 +433,19 @@ class _DashboardPageState extends State<DashboardPage> {
                     ),
                   if (_waterValve == null)
                     Text(l10n.pressRefreshHint),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => const DeviceHistoryPage(),
+                          ),
+                        );
+                      },
+                      child: Text(l10n.historyDetailButton),
+                    ),
+                  ),
                 ],
               ),
             ),

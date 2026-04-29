@@ -7,6 +7,20 @@
   "fullscreenCameraTooltip": "Toàn màn hình camera",
   "refreshTooltip": "Làm mới",
 
+  "deviceInfoTooltip": "Thông tin thiết bị",
+  "historyDetailButton": "Chi tiết",
+  "historyTitle": "Lịch sử độ ẩm & van nước",
+  "historyFromLabel": "Từ",
+  "historyToLabel": "Đến",
+  "historyIncludeHumidity": "Độ ẩm",
+  "historyIncludeValve": "Van",
+  "historySearchButton": "Tìm",
+  "historyLoadMore": "Xem thêm",
+  "historyColumnTime": "Ngày giờ",
+  "historyColumnValue": "Thông số",
+  "historyRangeMax3Days": "Mỗi lần chỉ xem tối đa 3 ngày.",
+  "historySelectOneType": "Chọn độ ẩm và/hoặc van.",
+
   "waterValveSectionTitle": "Điều khiển van nước",
   "humidityRawLabel": "Độ ẩm (raw): {value}",
   "@humidityRawLabel": {
@@ -54,6 +68,10 @@
   "backendBaseUrlLabel": "Backend base URL",
   "backendBaseUrlHint": "http://192.168.1.10:8000",
 
+  "ezvizAccessTokenLabel": "Token truy cập EZVIZ",
+  "ezvizAccessTokenHint": "Dán token từ EZVIZ OpenAPI / console",
+  "ezvizAccessTokenHelper": "Để trống để dùng token từ bản build (--dart-define), nếu đã cấu hình.",
+
   "technicalInfoTitle": "Thông tin kỹ thuật",
   "deviceLabel": "Thiết bị: {deviceId}",
   "@deviceLabel": { "placeholders": { "deviceId": {} } },
@@ -82,7 +100,7 @@
   "ezvizNotSupportedWeb": "EZVIZ không hỗ trợ trên Web",
   "ezvizOnlyAndroidIos": "EZVIZ chỉ hỗ trợ Android/iOS",
   "stopTooltip": "Dừng",
-  "missingAccessTokenBanner": "Thiếu EZVIZ_ACCESS_TOKEN. Chạy với --dart-define=EZVIZ_ACCESS_TOKEN=...",
+  "missingAccessTokenBanner": "Chưa có token EZVIZ: mở Cài đặt và dán access token (hoặc build với --dart-define=EZVIZ_ACCESS_TOKEN=...).",
   "cameraSourceLabel": "Nguồn: {value}",
   "@cameraSourceLabel": { "placeholders": { "value": {} } },
   "cameraApiAuthLabel": "API: {apiUrl}   AUTH: {authUrl}",

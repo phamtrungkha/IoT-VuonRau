@@ -134,6 +134,84 @@ abstract class AppLocalizations {
   /// **'Refresh'**
   String get refreshTooltip;
 
+  /// No description provided for @deviceInfoTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Device info'**
+  String get deviceInfoTooltip;
+
+  /// No description provided for @historyDetailButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get historyDetailButton;
+
+  /// No description provided for @historyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity & valve history'**
+  String get historyTitle;
+
+  /// No description provided for @historyFromLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get historyFromLabel;
+
+  /// No description provided for @historyToLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get historyToLabel;
+
+  /// No description provided for @historyIncludeHumidity.
+  ///
+  /// In en, this message translates to:
+  /// **'Humidity'**
+  String get historyIncludeHumidity;
+
+  /// No description provided for @historyIncludeValve.
+  ///
+  /// In en, this message translates to:
+  /// **'Valve'**
+  String get historyIncludeValve;
+
+  /// No description provided for @historySearchButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get historySearchButton;
+
+  /// No description provided for @historyLoadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load more'**
+  String get historyLoadMore;
+
+  /// No description provided for @historyColumnTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Date & time'**
+  String get historyColumnTime;
+
+  /// No description provided for @historyColumnValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading'**
+  String get historyColumnValue;
+
+  /// No description provided for @historyRangeMax3Days.
+  ///
+  /// In en, this message translates to:
+  /// **'You can view at most 3 days per search.'**
+  String get historyRangeMax3Days;
+
+  /// No description provided for @historySelectOneType.
+  ///
+  /// In en, this message translates to:
+  /// **'Select humidity and/or valve.'**
+  String get historySelectOneType;
+
   /// No description provided for @waterValveSectionTitle.
   ///
   /// In en, this message translates to:
@@ -272,6 +350,24 @@ abstract class AppLocalizations {
   /// **'http://192.168.1.10:8000'**
   String get backendBaseUrlHint;
 
+  /// No description provided for @ezvizAccessTokenLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'EZVIZ access token'**
+  String get ezvizAccessTokenLabel;
+
+  /// No description provided for @ezvizAccessTokenHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste token from EZVIZ OpenAPI / console'**
+  String get ezvizAccessTokenHint;
+
+  /// No description provided for @ezvizAccessTokenHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty to use the token from build (--dart-define), if configured.'**
+  String get ezvizAccessTokenHelper;
+
   /// No description provided for @technicalInfoTitle.
   ///
   /// In en, this message translates to:
@@ -401,7 +497,7 @@ abstract class AppLocalizations {
   /// No description provided for @missingAccessTokenBanner.
   ///
   /// In en, this message translates to:
-  /// **'Missing EZVIZ_ACCESS_TOKEN. Run with --dart-define=EZVIZ_ACCESS_TOKEN=...'**
+  /// **'No EZVIZ token: open Settings and paste access token (or build with --dart-define=EZVIZ_ACCESS_TOKEN=...).'**
   String get missingAccessTokenBanner;
 
   /// No description provided for @cameraSourceLabel.

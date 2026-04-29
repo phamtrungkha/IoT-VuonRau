@@ -13,8 +13,8 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ---- Common settings ----
-# Replace this token each time you run, if needed.
-EZVIZ_ACCESS_TOKEN="at.c5iguif2c4916h9pbzipvo659joc9s2m-1hsteud180-1sippjd-smgs4fmqq"
+# EZVIZ access token: nhập trong app (Cài đặt), không cần dart-define.
+# Tuỳ chọn khi dev: export EZVIZ_ACCESS_TOKEN='...' trước khi chạy script này.
 
 # If you want to force a specific device, set DEVICE (otherwise Flutter will pick the attached device).
 # DEVICE='iPhone của Kha'
@@ -28,9 +28,12 @@ command -v flutter >/dev/null 2>&1 || die "Missing command: flutter"
 
 cd "$ROOT_DIR"
 
-COMMON_ARGS=(
-  "--dart-define=EZVIZ_ACCESS_TOKEN=${EZVIZ_ACCESS_TOKEN}"
-)
+COMMON_ARGS=()
+if [[ -n "${EZVIZ_ACCESS_TOKEN:-}" ]]; then
+  COMMON_ARGS+=( "--dart-define=EZVIZ_ACCESS_TOKEN=${EZVIZ_ACCESS_TOKEN}" )
+fi
+# Khi uncomment các lệnh `flutter ...` phía dưới: nếu không có EZVIZ_ACCESS_TOKEN (mảng rỗng),
+# không được dùng `"${COMMON_ARGS[@]}"` trực tiếp — dùng nhánh if/else như phần "run release".
 
 # ---- MODE: run debug on attached phone (ENABLED) ----
 # if [[ -n "${DEVICE:-}" ]]; then
@@ -43,7 +46,12 @@ COMMON_ARGS=(
 # flutter run --profile "${COMMON_ARGS[@]}"
 
 # ---- MODE: run release (on device) ----
-flutter run --release "${COMMON_ARGS[@]}"
+# Avoid `${COMMON_ARGS[@]}` when the array is empty: with `set -u` Bash can fail with "unbound variable".
+if ((${#COMMON_ARGS[@]} > 0)); then
+  flutter run --release "${COMMON_ARGS[@]}"
+else
+  flutter run --release
+fi
 
 # ---- MODE: build Android APK (release) ----
 # flutter build apk --release "${COMMON_ARGS[@]}"

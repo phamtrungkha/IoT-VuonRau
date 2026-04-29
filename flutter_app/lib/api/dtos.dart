@@ -170,3 +170,50 @@ class DeviceSettingsKvDto {
   }
 }
 
+class HistoryTimelineItemDto {
+  final DateTime at;
+  final String kind;
+  final int? humidityRaw;
+  final String? valve;
+
+  HistoryTimelineItemDto({
+    required this.at,
+    required this.kind,
+    required this.humidityRaw,
+    required this.valve,
+  });
+
+  factory HistoryTimelineItemDto.fromJson(Map<String, dynamic> json) {
+    final atRaw = json['at'] as String?;
+    return HistoryTimelineItemDto(
+      at: atRaw != null ? DateTime.parse(atRaw) : DateTime.fromMillisecondsSinceEpoch(0),
+      kind: (json['kind'] as String?) ?? '',
+      humidityRaw: json['humidity_raw'] as int?,
+      valve: json['valve'] as String?,
+    );
+  }
+}
+
+class HistoryTimelineDto {
+  final List<HistoryTimelineItemDto> items;
+  final bool hasMore;
+
+  HistoryTimelineDto({required this.items, required this.hasMore});
+
+  factory HistoryTimelineDto.fromJson(Map<String, dynamic> json) {
+    final raw = json['items'];
+    final list = <HistoryTimelineItemDto>[];
+    if (raw is List) {
+      for (final e in raw) {
+        if (e is Map) {
+          list.add(HistoryTimelineItemDto.fromJson(Map<String, dynamic>.from(e)));
+        }
+      }
+    }
+    return HistoryTimelineDto(
+      items: list,
+      hasMore: (json['has_more'] as bool?) ?? false,
+    );
+  }
+}
+

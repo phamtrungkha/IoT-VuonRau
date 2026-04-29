@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vuonrau/l10n/app_localizations.dart';
 
+import '../app/app_config.dart';
 import 'ezviz_config.dart';
 import 'ezviz_camera_view.dart';
 import 'ezviz_ptz.dart';
@@ -15,7 +16,6 @@ class EzvizCameraScreen extends StatefulWidget {
 
 class _EzvizCameraScreenState extends State<EzvizCameraScreen> {
   final _appKey = EzvizConfig.appKey;
-  final _accessToken = EzvizConfig.accessToken;
   final _ezopenUrl = EzvizConfig.ezopenUrl;
   final _apiUrl = EzvizConfig.apiUrl;
   final _authUrl = EzvizConfig.authUrl;
@@ -113,7 +113,22 @@ class _EzvizCameraScreenState extends State<EzvizCameraScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final tokenMissing = _accessToken.trim().isEmpty;
+    return ValueListenableBuilder<String>(
+      valueListenable: AppConfig.ezvizAccessTokenOverride,
+      builder: (context, _, __) {
+        final token = AppConfig.ezvizAccessTokenEffective;
+        final tokenMissing = token.trim().isEmpty;
+        return _buildScaffold(context, l10n, tokenMissing, token);
+      },
+    );
+  }
+
+  Widget _buildScaffold(
+    BuildContext context,
+    AppLocalizations l10n,
+    bool tokenMissing,
+    String accessToken,
+  ) {
     return Scaffold(
       body: ColoredBox(
         color: Colors.black,
@@ -142,7 +157,7 @@ class _EzvizCameraScreenState extends State<EzvizCameraScreen> {
                                 scaleEnabled: true,
                                 child: EzvizCameraView(
                                   appKey: _appKey,
-                                  accessToken: _accessToken,
+                                  accessToken: accessToken,
                                   ezopenUrl: _ezopenUrl,
                                   apiUrl: _apiUrl,
                                   authUrl: _authUrl,

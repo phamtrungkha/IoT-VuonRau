@@ -219,6 +219,19 @@ curl -sS "http://127.0.0.1:8000/devices/water_controller/state"
 curl -sS "http://127.0.0.1:8000/devices/water_controller/status"
 ```
 
+### GET — timeline lịch sử độ ẩm + van (tối đa 3 ngày, 300 dòng/trang)
+
+Query: `from`, `to` (ISO-8601, ví dụ `2026-04-26T00:00:00Z`), `humidity` (mặc định `true`), `valve` (mặc định `true`), `offset` (0, 300, 600, …).
+
+- Khoảng `from`–`to` không được dài hơn **3 ngày**; `offset` phải là bội số của **300**.
+- Response: `items` (mỗi phần tử có `at`, `kind` = `humidity` | `valve`, `humidity_raw` hoặc `valve` = `ON`/`OFF`), `has_more`.
+
+```bash
+curl -sS "http://127.0.0.1:8000/devices/water_controller/history/timeline?from=2026-04-26T00:00:00Z&to=2026-04-29T23:59:59Z&humidity=true&valve=true&offset=0"
+```
+
+- Lịch sử van đọc từ bảng `water_valve_events` (mọi lần đổi trạng thái từ MQTT + ghi song song khi POST action như `irrigation_log`).
+
 ---
 
 ## Ghi chú triển khai
@@ -231,7 +244,8 @@ curl -sS "http://127.0.0.1:8000/devices/water_controller/status"
 | `repository/` + `entity/` | JPA + MySQL (lịch sử) |
 
 - Message MQTT hợp lệ: cập nhật memory trước, sau đó ghi `sensor_readings` nếu `type` là `sensor` và có `readings` (hoặc fallback legacy `humidity_raw`).
-- Mỗi lần gọi POST action thành công publish: ghi một dòng `irrigation_log` (`source=manual`, `action=ON` hoặc `OFF`).
+- Mỗi lần gọi POST action (publish): ghi `irrigation_log` (`source=manual`, `action=ON`/`OFF`) và một dòng `water_valve_events` (`source=manual`).
+- Khi MQTT cập nhật trạng thái van trong RAM: nếu giá trị đổi, ghi thêm `water_valve_events` (`source=mqtt`, bỏ qua trùng ngay sau bản `manual` cùng trạng thái trong vài giây).
 
 ---
 

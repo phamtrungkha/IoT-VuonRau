@@ -5,6 +5,7 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:vuonrau/main.dart';
@@ -14,6 +15,14 @@ void main() {
     await tester.pumpWidget(const VuonRauApp());
     await tester.pumpAndSettle();
 
-    expect(find.text('Water Valve'), findsOneWidget);
+    expect(
+      find.byWidgetPredicate(
+        (w) =>
+            w is Text &&
+            w.data != null &&
+            (w.data == 'Water valve' || w.data == 'Van nước'),
+      ),
+      findsOneWidget,
+    );
   });
 }

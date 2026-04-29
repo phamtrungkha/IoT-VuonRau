@@ -22,8 +22,10 @@ class _SettingsPageState extends State<SettingsPage> {
   late final TextEditingController _baseUrlController;
   late final TextEditingController _autoOffSecondsController;
   late final TextEditingController _moistureThresholdRawController;
+  late final TextEditingController _ezvizAccessTokenController;
 
   bool _loading = false;
+  bool _ezvizTokenObscured = true;
   String? _error;
   bool? _mqttConnected;
   double? _lastStateAgeS;
@@ -43,6 +45,9 @@ class _SettingsPageState extends State<SettingsPage> {
         TextEditingController(text: AppConfig.autoOffSeconds.value.toString());
     _moistureThresholdRawController =
         TextEditingController(text: AppConfig.moistureThresholdRaw.value.toString());
+    _ezvizAccessTokenController = TextEditingController(
+      text: AppConfig.ezvizAccessTokenOverride.value,
+    );
     _refreshAll();
     _refreshPublicIp();
   }
@@ -52,6 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _baseUrlController.dispose();
     _autoOffSecondsController.dispose();
     _moistureThresholdRawController.dispose();
+    _ezvizAccessTokenController.dispose();
     super.dispose();
   }
 
@@ -98,6 +104,10 @@ class _SettingsPageState extends State<SettingsPage> {
     if (next.isEmpty) return;
     await AppConfig.setBackendBaseUrl(next);
     await _refreshAll();
+  }
+
+  Future<void> _applyEzvizAccessToken(String value) async {
+    await AppConfig.setEzvizAccessToken(value);
   }
 
   Future<void> _refreshPublicIp() async {
@@ -296,6 +306,45 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                   ),
                 ),
+              const SizedBox(height: 16),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: l10n.ezvizAccessTokenLabel,
+                  hintText: l10n.ezvizAccessTokenHint,
+                  helperText: l10n.ezvizAccessTokenHelper,
+                  border: const OutlineInputBorder(),
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        tooltip:
+                            _ezvizTokenObscured ? 'Show token' : 'Hide token',
+                        icon: Icon(
+                          _ezvizTokenObscured
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _ezvizTokenObscured = !_ezvizTokenObscured;
+                          });
+                        },
+                      ),
+                      IconButton(
+                        tooltip: 'Clear',
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _ezvizAccessTokenController.clear();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                controller: _ezvizAccessTokenController,
+                autocorrect: false,
+                obscureText: _ezvizTokenObscured,
+                onSubmitted: _applyEzvizAccessToken,
+              ),
               const SizedBox(height: 16),
               Card(
                 child: Padding(

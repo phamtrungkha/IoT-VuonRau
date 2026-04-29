@@ -8,6 +8,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,15 @@ public class DeviceStateService {
     private final ConcurrentHashMap<String, DeviceRuntimeState> latest = new ConcurrentHashMap<>();
     private final DeviceProperties deviceProperties;
     private final ObjectMapper objectMapper;
+    private final WaterValveEventService waterValveEventService;
 
-    public DeviceStateService(DeviceProperties deviceProperties, ObjectMapper objectMapper) {
+    public DeviceStateService(
+            DeviceProperties deviceProperties,
+            ObjectMapper objectMapper,
+            WaterValveEventService waterValveEventService) {
         this.deviceProperties = deviceProperties;
         this.objectMapper = objectMapper;
+        this.waterValveEventService = waterValveEventService;
     }
 
     public void updateFromMqtt(String deviceId, JsonNode payload) {
@@ -29,7 +35,17 @@ public class DeviceStateService {
                 deviceId,
                 (k, v) -> {
                     DeviceRuntimeState base = v == null ? new DeviceRuntimeState() : v;
-                    return base.merge(payload, now);
+                    Boolean before = base.effectiveWaterValve();
+                    DeviceRuntimeState merged = base.merge(payload, now);
+                    Boolean after = merged.effectiveWaterValve();
+                    if (!Objects.equals(before, after)) {
+                        if (after != null) {
+                            waterValveEventService.recordMqttSafe(deviceId, after);
+                        } else if (Boolean.TRUE.equals(before)) {
+                            waterValveEventService.recordMqttSafe(deviceId, false);
+                        }
+                    }
+                    return merged;
                 });
     }
 

@@ -27,6 +27,45 @@ class AppLocalizationsVi extends AppLocalizations {
   String get refreshTooltip => 'Làm mới';
 
   @override
+  String get deviceInfoTooltip => 'Thông tin thiết bị';
+
+  @override
+  String get historyDetailButton => 'Chi tiết';
+
+  @override
+  String get historyTitle => 'Lịch sử độ ẩm & van nước';
+
+  @override
+  String get historyFromLabel => 'Từ';
+
+  @override
+  String get historyToLabel => 'Đến';
+
+  @override
+  String get historyIncludeHumidity => 'Độ ẩm';
+
+  @override
+  String get historyIncludeValve => 'Van';
+
+  @override
+  String get historySearchButton => 'Tìm';
+
+  @override
+  String get historyLoadMore => 'Xem thêm';
+
+  @override
+  String get historyColumnTime => 'Ngày giờ';
+
+  @override
+  String get historyColumnValue => 'Thông số';
+
+  @override
+  String get historyRangeMax3Days => 'Mỗi lần chỉ xem tối đa 3 ngày.';
+
+  @override
+  String get historySelectOneType => 'Chọn độ ẩm và/hoặc van.';
+
+  @override
   String get waterValveSectionTitle => 'Điều khiển van nước';
 
   @override
@@ -115,6 +154,16 @@ class AppLocalizationsVi extends AppLocalizations {
   String get backendBaseUrlHint => 'http://192.168.1.10:8000';
 
   @override
+  String get ezvizAccessTokenLabel => 'Token truy cập EZVIZ';
+
+  @override
+  String get ezvizAccessTokenHint => 'Dán token từ EZVIZ OpenAPI / console';
+
+  @override
+  String get ezvizAccessTokenHelper =>
+      'Để trống để dùng token từ bản build (--dart-define), nếu đã cấu hình.';
+
+  @override
   String get technicalInfoTitle => 'Thông tin kỹ thuật';
 
   @override
@@ -191,7 +240,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get missingAccessTokenBanner =>
-      'Thiếu EZVIZ_ACCESS_TOKEN. Chạy với --dart-define=EZVIZ_ACCESS_TOKEN=...';
+      'Chưa có token EZVIZ: mở Cài đặt và dán access token (hoặc build với --dart-define=EZVIZ_ACCESS_TOKEN=...).';
 
   @override
   String cameraSourceLabel(Object value) {

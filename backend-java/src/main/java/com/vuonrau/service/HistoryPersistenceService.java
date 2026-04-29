@@ -26,18 +26,21 @@ public class HistoryPersistenceService {
     private final SensorReadingRepository sensorReadingRepository;
     private final IrrigationLogRepository irrigationLogRepository;
     private final ObjectMapper objectMapper;
+    private final WaterValveEventService waterValveEventService;
 
     public HistoryPersistenceService(
             DeviceRepository deviceRepository,
             SensorTypeRepository sensorTypeRepository,
             SensorReadingRepository sensorReadingRepository,
             IrrigationLogRepository irrigationLogRepository,
-            ObjectMapper objectMapper) {
+            ObjectMapper objectMapper,
+            WaterValveEventService waterValveEventService) {
         this.deviceRepository = deviceRepository;
         this.sensorTypeRepository = sensorTypeRepository;
         this.sensorReadingRepository = sensorReadingRepository;
         this.irrigationLogRepository = irrigationLogRepository;
         this.objectMapper = objectMapper;
+        this.waterValveEventService = waterValveEventService;
     }
 
     @Transactional
@@ -135,6 +138,7 @@ public class HistoryPersistenceService {
         row.setSource("manual");
         row.setCreatedAt(Instant.now());
         irrigationLogRepository.save(row);
+        waterValveEventService.recordManual(deviceId, valveOn);
     }
 
     private static String text(JsonNode node, String field) {

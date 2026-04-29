@@ -117,8 +117,18 @@ class _EzvizCameraViewState extends State<EzvizCameraView> {
       'authUrl': widget.authUrl,
     };
 
+    final viewKey = ValueKey<Object>(
+      Object.hash(
+        widget.accessToken,
+        widget.ezopenUrl,
+        widget.apiUrl,
+        widget.authUrl,
+      ),
+    );
+
     if (Platform.isAndroid) {
       return AndroidView(
+        key: viewKey,
         viewType: 'ezviz_player_view',
         creationParams: params,
         creationParamsCodec: const StandardMessageCodec(),
@@ -127,6 +137,7 @@ class _EzvizCameraViewState extends State<EzvizCameraView> {
 
     if (Platform.isIOS) {
       return UiKitView(
+        key: viewKey,
         viewType: 'ezviz_player_view',
         creationParams: params,
         creationParamsCodec: const StandardMessageCodec(),
